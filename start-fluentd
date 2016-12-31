@@ -56,6 +56,7 @@ cat << EOF >> /etc/fluent/fluent.conf
 </filter>
 
 <filter kubernetes.**>
+  @type record_transformer
   <record>
   $([ -n "${CLUSTER_NAME}" ] && echo cluster_name "${CLUSTER_NAME}")
   $([ -n "${MY_NODE_NAME}" ] && echo node_name "${MY_NODE_NAME}")
