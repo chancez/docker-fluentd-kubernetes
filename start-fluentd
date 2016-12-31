@@ -55,6 +55,13 @@ cat << EOF >> /etc/fluent/fluent.conf
   preserve_json_log ${KUBERNETES_PRESERVE_JSON_LOG}
 </filter>
 
+<filter kubernetes.**>
+  <record>
+  $([ -n "${CLUSTER_NAME}" ] && echo cluster_name "${CLUSTER_NAME}")
+  $([ -n "${MY_NODE_NAME}" ] && echo node_name "${MY_NODE_NAME}")
+  </record>
+</filter>
+
 <filter **>
   @type prometheus
 
@@ -87,7 +94,7 @@ cat << EOF >> /etc/fluent/fluent.conf
   num_threads ${FLUENTD_FLUSH_THREADS}
   logstash_format ${FLUENTD_LOGSTASH_FORMAT}
   $([ -n "${FLUENTD_LOGSTASH_PREFIX}" ] && echo logstash_prefix ${FLUENTD_LOGSTASH_PREFIX})
-  reload_connections false
+  reload_connections $([ "${ELASTICSEARCH_RELOAD_CONNECTIONS}" == "true" ] && echo true || echo false)
 EOF
 
 cat << 'EOF' >> /etc/fluent/fluent.conf
