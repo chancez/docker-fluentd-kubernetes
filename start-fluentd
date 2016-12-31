@@ -95,9 +95,6 @@ cat << EOF >> /etc/fluent/fluent.conf
   logstash_format ${FLUENTD_LOGSTASH_FORMAT}
   $([ -n "${FLUENTD_LOGSTASH_PREFIX}" ] && echo logstash_prefix "${FLUENTD_LOGSTASH_PREFIX}")
   reload_connections $([ "${ELASTICSEARCH_RELOAD_CONNECTIONS}" == "true" ] && echo true || echo false)
-EOF
-
-cat << 'EOF' >> /etc/fluent/fluent.conf
 </match>
 EOF
 
