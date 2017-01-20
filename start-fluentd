@@ -22,6 +22,7 @@ FLUENTD_BUFFER_TYPE=${FLUENTD_BUFFER_TYPE:-memory}
 FLUENTD_BUFFER_PATH=${FLUENTD_BUFFER_PATH:-/var/fluentd/buffer}
 
 KUBERNETES_PRESERVE_JSON_LOG=${KUBERNETES_PRESERVE_JSON_LOG:-true}
+KUBERNETES_FETCH_METADATA=${KUBERNETES_FETCH_METADATA:-true}
 KUBERNETES_URL=${KUBERNETES_URL:-https://kubernetes.default.svc}
 KUBERNETES_VERIFY_SSL=${KUBERNETES_VERIFY_SSL:-true}
 
@@ -55,9 +56,17 @@ cat << EOF >> /etc/fluent/fluent.conf
 
 <filter kubernetes.**>
   @type kubernetes_metadata
+  preserve_json_log ${KUBERNETES_PRESERVE_JSON_LOG}
+EOF
+
+if [ "$KUBERNETES_FETCH_METADATA" != "true" ]; then
+cat << EOF >> /etc/fluent/fluent.conf
   kubernetes_url ${KUBERNETES_URL}
   verify_ssl ${KUBERNETES_VERIFY_SSL}
-  preserve_json_log ${KUBERNETES_PRESERVE_JSON_LOG}
+EOF
+fi
+
+cat << EOF >> /etc/fluent/fluent.conf
 </filter>
 
 <filter kubernetes.**>
