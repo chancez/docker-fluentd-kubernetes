@@ -35,6 +35,13 @@ mkdir -p /etc/fluent
 if ! [ -f /etc/fluent/fluent.conf ];then
 
 cat << EOF >> /etc/fluent/fluent.conf
+# Prevent fluentd from handling records containing its own logs. Otherwise
+# it can lead to an infinite loop, when error in sending one message generates
+# another message which also fails to be sent and so on.
+<match fluent.**>
+  type null
+</match>
+
 # input plugin that exports metrics
 <source>
   @type prometheus
@@ -43,6 +50,23 @@ cat << EOF >> /etc/fluent/fluent.conf
 # input plugin that collects metrics from MonitorAgent
 <source>
   @type prometheus_monitor
+</source>
+
+# Logs from systemd-journal for interesting services.
+<source>
+  type systemd
+  filters [{ "_SYSTEMD_UNIT": "docker.service" }]
+  pos_file /var/log/fluentd-journald-docker.pos
+  read_from_head true
+  tag docker
+</source>
+
+<source>
+  type systemd
+  filters [{ "_SYSTEMD_UNIT": "kubelet.service" }]
+  pos_file /var/log/fluentd-journald-kubelet.pos
+  read_from_head true
+  tag kubelet
 </source>
 
 <source>
