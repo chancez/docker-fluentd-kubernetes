@@ -1,6 +1,6 @@
-FROM fabric8/fluentd:0.14.8
+FROM quay.io/ecnahc515/fluentd:0.14.12
 
-MAINTAINER Jimmi Dyson <jimmidyson@gmail.com>
+MAINTAINER Chance Zibolski <chance.zibolski@gmail.com>
 
 ENTRYPOINT ["/start-fluentd"]
 
