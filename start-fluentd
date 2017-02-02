@@ -55,14 +55,6 @@ cat << EOF >> /etc/fluent/fluent.conf
 # Logs from systemd-journal for interesting services.
 <source>
   @type systemd
-  filters [{ "_SYSTEMD_UNIT": "docker.service" }]
-  pos_file /var/log/fluentd-journald-docker.pos
-  read_from_head true
-  tag docker
-</source>
-
-<source>
-  @type systemd
   filters [{ "_SYSTEMD_UNIT": "kubelet.service" }]
   pos_file /var/log/fluentd-journald-kubelet.pos
   read_from_head true
