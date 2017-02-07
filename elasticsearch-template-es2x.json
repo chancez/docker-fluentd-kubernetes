@@ -1,7 +1,8 @@
 {
   "template" : "logstash-*",
   "settings" : {
-    "index.refresh_interval" : "5s"
+    "index.refresh_interval" : "5s",
+    "number_of_shards": 1
   },
   "mappings" : {
     "_default_" : {
