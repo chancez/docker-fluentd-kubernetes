@@ -92,9 +92,7 @@ cat << EOF >> /etc/fluent/fluent.conf
   <record>
     $([ -n "${CLUSTER_NAME}" ] && echo cluster_name "${CLUSTER_NAME}")
     $([ -n "${MY_NODE_NAME}" ] && echo node_name "${MY_NODE_NAME}")
-    $([ -n "${RENAME_LOG_FIELD_KEY}" ] && echo "${RENAME_LOG_FIELD_KEY}" '${record[["log"]}')
   </record>
-  $([ -n "${REMOVE_LOG_FIELD_KEY}" ] && echo remove_keys log
 </filter>
 
 <filter **>
