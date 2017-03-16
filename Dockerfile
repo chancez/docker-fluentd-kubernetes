@@ -17,4 +17,5 @@ RUN scl enable rh-ruby23 'gem install --no-document fluent-plugin-kubernetes_met
     scl enable rh-ruby23 'gem cleanup fluentd'
 
 ADD elasticsearch-template-es2x.json /etc/fluent/elasticsearch-template-es2x.json
+ADD elasticsearch-template-es5x.json /etc/fluent/elasticsearch-template-es5x.json
 ADD start-fluentd /start-fluentd

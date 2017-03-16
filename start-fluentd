@@ -121,8 +121,8 @@ cat << EOF >> /etc/fluent/fluent.conf
   logstash_format ${FLUENTD_LOGSTASH_FORMAT}
   logstash_prefix ${FLUENTD_LOGSTASH_PREFIX}
   logstash_dateformat ${FLUENTD_LOGSTASH_DATEFORMAT}
-  template_file /etc/fluent/elasticsearch-template-es2x.json
-  template_name elasticsearch-template-es2x.json
+  template_file /etc/fluent/elasticsearch-template-es5x.json
+  template_name elasticsearch-template-es5x.json
 
   reload_connections $([ "${ELASTICSEARCH_RELOAD_CONNECTIONS}" == "true" ] && echo true || echo false)
 EOF
